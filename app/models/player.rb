@@ -1,2 +1,15 @@
 class Player < ApplicationRecord
+  # Validation
+  validates :name,
+            presence: true
+  validates :color,
+            presence: true,
+            format: { with: /\A\#\h{6}\z/, message: "color must be \#xxxxxx"}
+
+  # Callbacks
+  before_validation :init_color, on: :create
+
+  def init_color
+    self.color = '#f71b6c' unless color
+  end
 end

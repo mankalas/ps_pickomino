@@ -18,7 +18,7 @@ When(/^he fills up the player's name with (\d+)$/) do |name|
   fill_in 'Player name', with: name
 end
 
-When(/^he fills up the player's color with (\#\h+)$/) do |color|
+When(/^he fills up the player's color with (\#\h{6})$/) do |color|
   fill_in 'Player color', with: color
 end
 
@@ -34,7 +34,7 @@ Then(/^he sees the player's name is (\d+)$/) do |name|
   expect(page).to have_content(name)
 end
 
-Then(/^he sees the player's color is (\#\h+)$/) do |color|
+Then(/^he sees the player's color is (\#\h{6})$/) do |color|
   expect(page).to have_content(color)
 end
 
