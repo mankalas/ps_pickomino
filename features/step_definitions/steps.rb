@@ -7,11 +7,11 @@ When(/^he clicks on the new player button$/) do
 end
 
 Then(/^he is on the new player page$/) do
-  expect(current_path).to eq new_players_path
+  expect(current_path).to eq new_player_path
 end
 
 Given(/^The user is on the new player page$/) do
-  visit new_players_path
+  visit new_player_path
 end
 
 When(/^he fills up the player's name with (\w+)$/) do |name|
@@ -27,7 +27,7 @@ When(/^he clicks on the create new player button$/) do
 end
 
 Then(/^he is on the index page$/) do
-  expect(current_path).to eq welcome_index_path
+  expect(current_path).to eq root_path
 end
 
 Then(/^he sees the player's name is (\w+)$/) do |name|
@@ -55,5 +55,5 @@ When(/^he clicks on the new game button$/) do
 end
 
 Then(/^he is on the new game page$/) do
-  expect(current_path).to eq new_games_path
+  expect(current_path).to eq game_path(Game.last)
 end

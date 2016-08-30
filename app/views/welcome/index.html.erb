@@ -1,8 +1,19 @@
 <h1>Welcome to Pickomino</h1>
 
 <p>List of Games</p>
+<table>
+    <tr>
+        <th>Id</th>
+    </tr>
+    <% @games.all.each do |game| %>
+        <tr>
+            <td><%= game.id %></td>
+            <td><%= link_to 'Join', game_path(game) %></td>
+        </tr>
+    <% end %>
+</table>
 
-<%= link_to 'New game', new_games_path %>
+<%= link_to 'New game', games_path, method: :post %>
 
 <p>List of Players</p>
 <table>
@@ -18,4 +29,4 @@
     <% end %>
 </table>
 
-<%= link_to 'New player', new_players_path %>
+<%= link_to 'New player', new_player_path %>
