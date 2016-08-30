@@ -1,0 +1,11 @@
+<%= form_for @player do |f| %>
+    <%= render partial: 'error' %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %><br>
+
+    <%= f.label :color %>
+    <%= f.color_field :color %><br>
+
+    <%= f.submit %>
+<% end %>
