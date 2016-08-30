@@ -3,9 +3,9 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      redirect_to welcome_index_path
+      redirect_to root_path
     else
-      redirect_to new_players_path, notice: @player.errors
+      redirect_to new_player_path, notice: @player.errors
     end
   end
 
