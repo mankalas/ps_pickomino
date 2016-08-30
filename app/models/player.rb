@@ -1,7 +1,8 @@
 class Player < ApplicationRecord
   # Validation
   validates :name,
-            presence: true
+            presence: true,
+            uniqueness: true
   validates :color,
             presence: true,
             format: { with: /\A\#\h{6}\z/, message: "color must be \#xxxxxx"}

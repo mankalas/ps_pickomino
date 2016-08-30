@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  let(:player) { Player.new(name: "Chiche") }
+  let(:name) { "Chiche" }
+  let(:player) { Player.new(name: name) }
 
   describe "Validation" do
     describe "name" do
@@ -31,6 +32,13 @@ RSpec.describe Player, type: :model do
 
       it "rejects nil" do
         expect{ player.name = nil }.to change{ player.valid? }.from(true).to(false)
+      end
+
+      it "rejects duplicates" do
+        player.save
+        player = Player.new(name: name)
+        player.save
+        expect(player).not_to be_valid
       end
     end
 
