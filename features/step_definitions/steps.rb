@@ -7,7 +7,7 @@ When(/^he clicks on the new player button$/) do
 end
 
 Then(/^he is on the new player page$/) do
-  expect(page).to have_title("New player")
+  expect(current_path).to eq new_players_path
 end
 
 Given(/^The user is on the new player page$/) do
@@ -27,7 +27,7 @@ When(/^he clicks on the create new player button$/) do
 end
 
 Then(/^he is on the index page$/) do
-  expect(page).to have_title("Welckome to Pickomino")
+  expect(current_page).to eq welcome_index_path
 end
 
 Then(/^he sees the player's name is (\d+)$/) do |name|
