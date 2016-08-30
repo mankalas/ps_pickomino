@@ -3,5 +3,17 @@
 <p>List of Games</p>
 
 <p>List of Players</p>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Color</th>
+    </tr>
+    <% @players.all.each do |player| %>
+        <tr>
+            <td><%= player.name %></td>
+            <td><%= player.color %></td>
+        </tr>
+    <% end %>
+</table>
 
 <%= link_to 'New player', new_players_path %>
