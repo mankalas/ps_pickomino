@@ -11,7 +11,7 @@ Then(/^he is on the new player page$/) do
 end
 
 Given(/^The user is on the new player page$/) do
-  visit new_player_path
+  visit new_players_path
 end
 
 When(/^he fills up the player's name with (\d+)$/) do |name|

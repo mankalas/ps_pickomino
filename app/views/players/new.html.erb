@@ -1,0 +1,13 @@
+<h1>Here comes a new challenger!</h1>
+
+<%= form_for :player, url: players_path do |f| %>
+    <%= render partial: 'error' %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %><br>
+
+    <%= f.label :color %>
+    <%= f.color_field :color %><br>
+
+    <%= f.submit 'Create player' %>
+<% end %>
