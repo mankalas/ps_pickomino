@@ -49,3 +49,11 @@ end
 Then(/^a error about player not having a name is shown$/) do
   expect(page).to have_content("can't be blank")
 end
+
+When(/^he clicks on the new game button$/) do
+  click_link 'New game'
+end
+
+Then(/^he is on the new game page$/) do
+  expect(current_path).to eq new_games_path
+end
