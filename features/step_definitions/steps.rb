@@ -1,5 +1,5 @@
 Given(/^The user is on the index page$/) do
-  visit index
+  visit root_path
 end
 
 When(/^he clicks on the new player button$/) do
