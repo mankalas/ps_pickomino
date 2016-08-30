@@ -11,6 +11,6 @@ class Player < ApplicationRecord
   before_validation :init_color, on: :create
 
   def init_color
-    self.color = '#f71b6c' unless color
+    self.color = '#f71b6c' if color == nil || color.empty?
   end
 end

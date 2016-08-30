@@ -49,7 +49,8 @@ Feature: Create a new Player
     And he fills up the player's name with <name>
     And he clicks on the create new player button
     Then he is on the index page
-    And he sees the player's name is <name> and color is <color>
+    And he sees the player's name is <name>
+    And he sees the player's color is <color>
     Examples:
     | name   | color   |
     | Chiche | #f71b6c |
