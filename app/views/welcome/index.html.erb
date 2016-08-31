@@ -15,20 +15,20 @@
 
 <%= link_to 'New Game', games_path, method: :post %>
 
-<p>List of Players</p>
+<p>List of Users</p>
 <table>
     <tr>
         <th>Name</th>
         <th>Color</th>
     </tr>
-    <% @players.all.each do |player| %>
+    <% @users.all.each do |user| %>
         <tr>
-            <td><%= player.name %></td>
-            <td><%= player.color %></td>
-            <td><%= link_to 'Edit', edit_player_path(player) %></td>
-            <td><%= link_to 'Delete', player_path(player), method: :delete %></td>
+            <td><%= user.name %></td>
+            <td><%= user.color %></td>
+            <td><%= link_to 'Edit', edit_user_path(user) %></td>
+            <td><%= link_to 'Delete', user_path(user), method: :delete %></td>
         </tr>
     <% end %>
 </table>
 
-<%= link_to 'New Player', new_player_path %>
+<%= link_to 'New User', new_user_path %>
