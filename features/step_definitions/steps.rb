@@ -97,3 +97,15 @@ end
 Then(/^the player (\d+) doesn't exist anymore$/) do |id|
   expect(Player.find_by(id: id)).to be nil
 end
+
+When(/^he clicks on the quit button$/) do
+  click_link 'Quit'
+end
+
+Given(/^A game (\d+) exists$/) do |id|
+  Game.new(id: id).save!
+end
+
+Given(/^(?:t|T)he user is on the game (\d+) page$/) do |id|
+  visit game_path(Game.find(id))
+end
