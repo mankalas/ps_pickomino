@@ -26,7 +26,7 @@
             <td><%= player.name %></td>
             <td><%= player.color %></td>
             <td><%= link_to 'Edit', edit_player_path(player) %></td>
-            <td><%= link_to 'Destroy', player_path(player), method: :delete %></td>
+            <td><%= link_to 'Delete', player_path(player), method: :delete %></td>
         </tr>
     <% end %>
 </table>

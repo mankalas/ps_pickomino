@@ -89,3 +89,11 @@ end
 Given(/^A player exists and his name is (\w+)$/) do |name|
   Player.new(name: name).save!
 end
+
+When(/^he clicks on the delete player button$/) do
+  click_link 'Delete'
+end
+
+Then(/^the player (\d+) doesn't exist anymore$/) do |id|
+  expect(Player.find_by(id: id)).to be nil
+end
