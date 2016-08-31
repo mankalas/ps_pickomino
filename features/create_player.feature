@@ -28,7 +28,7 @@ Feature: Create a new Player
     And he fills up the player's color with <color>
     And he clicks on the create new player button
     Then he is on the new player page
-    And a error about player already existing is shown
+    And an error about player already existing is shown
     Examples:
     | name   | color   |
     | Chiche | #123456 |
@@ -39,18 +39,7 @@ Feature: Create a new Player
     And he fills up the player's color with <color>
     And he clicks on the create new player button
     Then he is on the new player page
-    And a error about player not having a name is shown
+    And an error about player not having a name is shown
     Examples:
     | color   |
     | #fabecc |
-
-  Scenario Outline: User creates a player with no color
-    Given The user is on the new player page
-    And he fills up the player's name with <name>
-    And he clicks on the create new player button
-    Then he is on the index page
-    And he sees the player's name is <name>
-    And he sees the player's color is <color>
-    Examples:
-    | name   | color   |
-    | Chiche | #f71b6c |

@@ -19,7 +19,7 @@ class PlayersController < ApplicationController
     if @player.update(player_params)
       redirect_to root_path
     else
-      redirect_to edit_player(@player), notice: @player.errors
+      redirect_to edit_player_path(@player), notice: @player.errors
     end
   end
 
