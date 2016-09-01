@@ -1,4 +1,7 @@
 class Player < ApplicationRecord
+  # Association
+  has_and_belongs_to_many :games
+
   # Validation
   validates :name,
             presence: true,
@@ -7,7 +10,7 @@ class Player < ApplicationRecord
             presence: true,
             format: { with: /\A\#\h{6}\z/, message: "color must be \#xxxxxx"}
 
-  # Callbacks
+  # Callback
   before_validation :init_color, on: :create
 
   def init_color
