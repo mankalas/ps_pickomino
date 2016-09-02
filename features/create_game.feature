@@ -6,3 +6,4 @@ Feature: Create a new Game
     When I click on the new game link
     Then I am on the new game page
     And I see "Vincent"
+    And I see the dominos

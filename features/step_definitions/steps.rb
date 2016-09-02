@@ -119,6 +119,7 @@ Given(/^a user "([^"]*)" exists$/) do |name|
 end
 
 When(/^I click on the new game link$/) do
+  CreateDominosService.new.call
   click_link 'New Game'
 end
 
@@ -128,4 +129,8 @@ end
 
 Then(/^I see "([^"]*)"$/) do |name|
   expect(page).to have_content(name)
+end
+
+Then(/^I see the dominos$/) do
+  expect(page).to have_content("Dominos available: #{(21..36).to_a.join(', ')}")
 end
