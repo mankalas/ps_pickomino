@@ -109,3 +109,23 @@ end
 Given(/^(?:t|T)he user is on the game (\d+) page$/) do |id|
   visit game_path(Game.find(id))
 end
+
+Given(/^I am on the index page$/) do
+  visit root_path
+end
+
+Given(/^a user "([^"]*)" exists$/) do |name|
+  User.create(name: name, color: "#fabecc")
+end
+
+When(/^I click on the new game link$/) do
+  click_link 'New Game'
+end
+
+Then(/^I am on the new game page$/) do
+  expect(current_path).to eq game_path(Game.last)
+end
+
+Then(/^I see "([^"]*)"$/) do |name|
+  expect(page).to have_content(name)
+end

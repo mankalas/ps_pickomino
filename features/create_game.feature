@@ -1,6 +1,8 @@
 Feature: Create a new Game
 
-  Scenario: User goes to the new game page
-    Given The user is on the index page
-    When he clicks on the new game button
-    Then he is on the new game page
+  Scenario: I create a brand new game
+    Given I am on the index page
+    And a user "Vincent" exists
+    When I click on the new game link
+    Then I am on the new game page
+    And I see "Vincent"
