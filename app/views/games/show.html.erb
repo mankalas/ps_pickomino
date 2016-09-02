@@ -1,3 +1,10 @@
 <h1>Game #<%= @game.id %></h1>
 
+<p>
+    Players in game:
+    <% @game.players.each do |pl| %>
+        <%= pl.name %>
+    <% end %>
+</p>
+
 <%= link_to 'Quit', root_path %>

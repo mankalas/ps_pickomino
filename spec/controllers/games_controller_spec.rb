@@ -12,6 +12,10 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe "POST #create" do
+    before do
+      User.create(:name => "Chiche", :color => "#fabecc")
+    end
+
     let(:create_request) { post :create }
 
     it "creates a new game" do
