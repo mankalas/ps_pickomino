@@ -1,10 +1,7 @@
 Feature: Quit a new Game
 
-  Scenario Outline: User quit the current page
-    Given A game <id> exists
-    And the user is on the game <id> page
-    When he clicks on the quit button
-    Then he is on the index page
-    Examples:
-    | id |
-    |  1 |
+  Scenario: I quit the current page
+    Given A game "1" exists
+    And I am on the game "1" page
+    When I click on the "Quit" link
+    Then I am on the index page

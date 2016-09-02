@@ -1,11 +1,7 @@
 Feature: Delete a user
 
-  Scenario Outline: The user deletes an existing user
-    Given A user <id> exists
-    And the user is on the index page
-    When he clicks on the delete user button
-    Then he is on the index page
-    And the user <id> doesn't exist anymore
-    Examples:
-    | id |
-    |  1 |
+  Scenario: The user deletes an existing user
+    Given A user named "Vincent" exists
+    And I am on the index page
+    When I click on the "Delete" link
+    Then I don't see "Vincent"

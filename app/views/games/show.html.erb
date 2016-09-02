@@ -12,4 +12,6 @@
     <%= @game.in_game_dominos.map{ |d| d.value }.join(', ') %>
 </p>
 
+<h2>Turn #<%= @game.current_turn.index %></h2>
+
 <%= link_to 'Quit', root_path %>

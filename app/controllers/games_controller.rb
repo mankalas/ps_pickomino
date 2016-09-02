@@ -4,6 +4,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    redirect_to CreateGameService.new.call
+    @game = Game.create!
+    SetupGame.new(@game).call
+    redirect_to @game
   end
 end

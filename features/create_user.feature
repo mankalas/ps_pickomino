@@ -1,45 +1,34 @@
 Feature: Create a new User
 
   Scenario: User goes to the new user page
-    Given The user is on the index page
-    When he clicks on the new user button
-    Then he is on the new user page
+    Given I am on the index page
+    When I click on the "New User" link
+    Then I see "Here comes a new challenger!"
 
-  Scenario Outline: User fills up the user info correctly
-    Given The user is on the new user page
-    When he fills up the user's name with <name>
-    And he fills up the user's color with <color>
-    And he clicks on the create new user button
-    Then he is on the index page
-    And he sees the user's name is <name>
-    And he sees the user's color is <color>
-    Examples:
-    | name    | color   |
-    | Vincent | #34b3eb |
-    | Marc    | #fabecc |
-    | Michael | #33b17c |
-    | Seth    | #3f3f3f |
-    | Neil    | #fae889 |
+  Scenario: User fills up the user info correctly
+    Given I am on the new user page
+    When I fill up "Name" with "Vincent"
+    And I fill up "Color" with "#fabecc"
+    And I click on the "Create User" button
+    Then I am on the index page
+    And I see "Vincent"
+    And I see "#fabecc"
 
-  Scenario Outline: User tries to create a user that already exists
-    Given The user is on the new user page
-    And A user named <name> already exists
-    When he fills up the user's name with <name>
-    And he fills up the user's color with <color>
-    And he clicks on the create new user button
-    Then he is on the new user page
-    And an error about user already existing is shown
-    Examples:
-    | name   | color   |
-    | Chiche | #123456 |
-    | CaMeL  | #123456 |
+  Scenario: A user already exists
+    Given A user named "Vincent" exists
+    And I am on the index page
+    Then I see "Vincent"
 
-  Scenario Outline: User tries to create a user with no name
-    Given The user is on the new user page
-    And he fills up the user's color with <color>
-    And he clicks on the create new user button
-    Then he is on the new user page
-    And an error about user not having a name is shown
-    Examples:
-    | color   |
-    | #fabecc |
+  Scenario: User tries to create a user that already exists
+    Given A user named "Vincent" exists
+    And I am on the new user page
+    When I fill up "Name" with "Vincent"
+    And I fill up "Color" with "#fabecc"
+    And I click on the "Create User" button
+    And I see "has already been taken"
+
+  Scenario: User tries to create a user with no name
+    Given I am on the new user page
+    And I fill up "Color" with "#fabecc"
+    And I click on the "Create User" button
+    Then I see "can't be blank"
