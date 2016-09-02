@@ -7,4 +7,9 @@
     <% end %>
 </p>
 
+<p>
+    Dominos available:
+    <%= @game.in_game_dominos.map{ |d| d.value }.join(', ') %>
+</p>
+
 <%= link_to 'Quit', root_path %>
