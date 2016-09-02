@@ -1,0 +1,2 @@
+class Domino < ApplicationRecord
+end
