@@ -14,8 +14,8 @@
 
 <h2>Turn #<%= @game.current_turn.index %></h2>
 
-<%= render partial: 'picked_dice' %>
-<%= render partial: 'roll_outcome' %>
+<%= show_picked_dice %>
+<%= show_roll_outcome %>
 <%= show_roll_form %>
 
 <%= link_to 'Quit', root_path %>
