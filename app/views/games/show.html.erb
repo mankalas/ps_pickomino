@@ -14,5 +14,8 @@
 
 <h2>Turn #<%= @game.current_turn.index %></h2>
 
+<p>Roll outcome: <%= @game.last_roll_outcome %>
+
 <%= link_to 'Roll', game_roll_path(@game), method: :post %>
+
 <%= link_to 'Quit', root_path %>

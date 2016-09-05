@@ -4,4 +4,4 @@ Feature: Make a roll
     Given A game "1" exists
     And I am on the game "1" page
     When I click on the "Roll" link
-    Then I see "Roll:"
+    Then I see "Roll outcome:"

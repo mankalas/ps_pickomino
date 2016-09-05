@@ -12,4 +12,9 @@ class Game < ApplicationRecord
   def current_turn_rank
     current_turn
   end
+
+  def last_roll_outcome
+    last_roll = current_turn.rolls.last
+    last_roll.outcome if not last_roll.nil?
+  end
 end
