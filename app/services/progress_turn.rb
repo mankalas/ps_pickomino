@@ -9,7 +9,7 @@ class ProgressTurn
       last_roll = @current_turn.rolls.last
       last_roll.pick = @choice[:value]
       last_roll.save!
-      create_roll(last_roll.outcome.count(last_roll.pick))
+      create_roll(last_roll.outcome.length - last_roll.outcome.count(last_roll.pick))
 
     elsif @choice.include?(:domino)
       @current_turn.pick = Domino.find_by(value: @choice[:domino])

@@ -15,6 +15,10 @@ class Game < ApplicationRecord
 
   def last_roll_outcome
     last_roll = current_turn.rolls.last
-    last_roll.outcome if not last_roll.nil?
+    last_roll.outcome unless last_roll.nil?
+  end
+
+  def first_roll?
+    current_turn.rolls.empty?
   end
 end

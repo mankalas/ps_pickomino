@@ -3,7 +3,7 @@ class CreateThrows < ActiveRecord::Migration[5.0]
     create_table :throws do |t|
       t.references :turn, foreign_key: true
       t.string :outcome
-      t.integer :pick
+      t.string :pick
 
       t.timestamps
     end

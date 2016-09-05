@@ -34,6 +34,7 @@ Given(/^(?:A|a) user named "([^"]*)" exists$/) do |name|
 end
 
 Given(/^A game "([^"]*)" exists$/) do |id|
+  CreateDominosService.new.call
   game = Game.create!(id: id)
   SetupGame.new(game).call
 end
