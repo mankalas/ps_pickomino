@@ -40,6 +40,7 @@ Feature: A player's turn
     And I click on the "Pick & Roll" button
     Then I see "You've already picked"
     And I see <nb> '<value>'s
+    And I see "Your dice score is <score>"
     Examples:
     | outcome  | value | nb | score |
     | 12345W12 |     1 |  2 |     2 |

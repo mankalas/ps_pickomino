@@ -32,4 +32,8 @@ module GamesHelper
   def show_roll_outcome
     render partial: 'roll_outcome' unless @game.first_roll?
   end
+
+  def dice_score
+    @game.current_turn.rolls.sum(&:score)
+  end
 end
