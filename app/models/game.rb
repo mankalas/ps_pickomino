@@ -6,30 +6,35 @@ class Game < ApplicationRecord
   has_many :in_game_dominos
 
   def current_turn
+    raise Exception if players.empty?
+    turns.create!(player: players.take) if turns.empty?
     turns.order(:created_at).last
   end
 
-  def current_turn_rank
-    current_turn
-  end
-
   def last_roll_outcome
-    last_roll = current_turn.rolls.last
-    last_roll.outcome unless last_roll.nil?
+    current_turn.last_roll_outcome
   end
 
   def first_roll?
-    current_turn.rolls.empty?
+    current_turn.first_roll?
   end
 
-  def pick_domino(value)
-    domino = in_game_dominos.joins(:domino).where(dominos: {:value => value}).take
-    turn = current_turn
-    turn.in_game_domino = domino
-    current_turn.player.in_game_dominos << domino
+  def current_worm_score
+    current_turn.worm_score
   end
 
-  def current_score
-    current_turn.player.in_game_dominos.sum(&:nb_worms)
+  def pick_domino!(value)
+    domino = retrieve_domino_by_value(value)
+
+    in_game_dominos.delete(domino)
+    save!
+
+    current_turn.pick_domino!(domino)
+  end
+
+  private
+
+  def retrieve_domino_by_value(value)
+    in_game_dominos.joins(:domino).where(dominos: {:value => value}).take
   end
 end

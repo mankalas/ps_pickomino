@@ -6,4 +6,8 @@ class InGameDomino < ApplicationRecord
   def value
     domino.value
   end
+
+  def nb_worms
+    domino.nb_worms
+  end
 end

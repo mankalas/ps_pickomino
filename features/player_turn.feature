@@ -51,7 +51,7 @@ Feature: A player's turn
     Given I am in a game
     And I have a dice score of <dice_score>
     When I pick the domino <domino>
-    Then I see "Your have <nb_worms> worms"
+    Then I see "You have <nb_worms> worms"
     Examples:
     | dice_score | domino | nb_worms |
     |         30 |     30 |        3 |

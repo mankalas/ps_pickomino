@@ -13,6 +13,10 @@ class Player < ApplicationRecord
   end
 
   def last_domino
-    turns.last.in_game_domino
+    turns.last.in_game_domino unless turns.empty?
+  end
+
+  def worm_score
+    in_game_dominos.sum(&:nb_worms)
   end
 end

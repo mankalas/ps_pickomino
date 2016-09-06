@@ -42,6 +42,7 @@ end
 Given(/^I have a dice score of (\d+)$/) do |score|
   game = Game.find(1)
   game.current_turn.rolls.create!(outcome: '5' * (score.to_i / 5), pick: '5')
+  ProgressTurn.new(game.current_turn, {}).call
   visit game_path(game)
 end
 
@@ -64,7 +65,7 @@ end
 
 When(/^I pick the domino (\d+)$/) do |domino|
   game = Game.find(1)
-  game.pick_domino(domino)
+  game.pick_domino!(domino)
   visit game_path(game)
 end
 
