@@ -11,4 +11,8 @@ class Player < ApplicationRecord
   def color
     user.color
   end
+
+  def last_domino
+    turns.last.in_game_domino
+  end
 end

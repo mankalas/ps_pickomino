@@ -21,4 +21,15 @@ class Game < ApplicationRecord
   def first_roll?
     current_turn.rolls.empty?
   end
+
+  def pick_domino(value)
+    domino = in_game_dominos.joins(:domino).where(dominos: {:value => value}).take
+    turn = current_turn
+    turn.in_game_domino = domino
+    current_turn.player.in_game_dominos << domino
+  end
+
+  def current_score
+    current_turn.player.in_game_dominos.sum(&:nb_worms)
+  end
 end

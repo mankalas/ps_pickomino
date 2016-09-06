@@ -12,6 +12,10 @@
     <%= @game.in_game_dominos.map{ |d| d.value }.join(', ') %>
 </p>
 
+<p>
+    You have <%= @game.current_score %> worms.
+</p>
+
 <h2>Turn #<%= @game.current_turn.index %></h2>
 
 <%= show_picked_dice %>

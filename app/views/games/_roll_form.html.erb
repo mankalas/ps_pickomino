@@ -4,3 +4,12 @@
 
     <%= submit_tag 'Pick & Roll'%>
 <% end %>
+
+<% if dice_score >= smallest_available_domino(dice_score) %>
+    <%= form_tag(game_roll_path(@game), :method => :post) do %>
+        <%= label_tag "I want to pick the Domino" %>
+        <%= select_tag :value, options_for_select(show_available_dominos_values(dice_score)) %>
+
+        <%= submit_tag 'Pick Domino'%>
+    <% end %>
+<% end %>

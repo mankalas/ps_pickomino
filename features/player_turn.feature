@@ -46,3 +46,13 @@ Feature: A player's turn
     | 12345W12 |     1 |  2 |     2 |
     | WWWWWWWW |     W |  8 |    40 |
     | 12345123 |     4 |  1 |     4 |
+
+  Scenario Outline: I want to pick a domino which values as much or less than my dice score
+    Given I am in a game
+    And I have a dice score of <dice_score>
+    When I pick the domino <domino>
+    Then I see "Your have <nb_worms> worms"
+    Examples:
+    | dice_score | domino | nb_worms |
+    |         30 |     30 |        3 |
+    |         30 |     27 |        2 |

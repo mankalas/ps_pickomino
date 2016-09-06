@@ -36,4 +36,26 @@ module GamesHelper
   def dice_score
     @game.current_turn.rolls.sum(&:score)
   end
+
+  def smallest_available_domino(dice_score)
+    min_domino = available_dominos(dice_score).min_by { |domino| domino.value }
+    if min_domino
+      min_domino.domino.value
+    else
+      100
+    end
+  end
+
+  def available_dominos(dice_score)
+    game_dominos = @game.in_game_dominos.joins(:domino).where("value <= #{dice_score}")
+    players_dominos = @game.players.each.collect do |player|
+      last_domino = player.last_domino
+      last_domino if last_domino and last_domino.value >= dice_score
+    end.compact
+    game_dominos + players_dominos
+  end
+
+  def show_available_dominos_values(dice_score)
+    available_dominos(dice_score).collect { |domino| domino.value }
+  end
 end
