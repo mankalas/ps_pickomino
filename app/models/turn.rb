@@ -14,8 +14,13 @@ class Turn < ApplicationRecord
     rolls.sum(&:score)
   end
 
+  # You've lost if you have just rolled the dice and there is no value
+  # you can pick OR you've just picked the last dice and you can't
+  # pick a domino
   def lost?
-    rolls.present? && available_dice_values.empty?
+    rolls.present? &&
+      ((rolls.last.pick.nil? && available_dice_values.empty?) ||
+       (!any_dice_left? && !can_pick_domino?))
   end
 
   def last_roll_outcome
@@ -31,7 +36,7 @@ class Turn < ApplicationRecord
   end
 
   def can_roll?
-    rolls.empty? || rolls.last.outcome.nil? || !rolls.last.pick.nil?
+    (rolls.empty? || rolls.last.outcome.nil? || !rolls.last.pick.nil?) && any_dice_left?
   end
 
   def first_pick?
@@ -39,17 +44,19 @@ class Turn < ApplicationRecord
   end
 
   def can_pick_dice?
-    rolls.present? && rolls.last.pick.nil? && !lost?
+    rolls.present? && rolls.last.pick.nil? && !lost? && any_dice_left?
   end
 
   def can_pick_domino?
     # At least one roll has been made
     rolls.present? &&
-      # No pick has been done at the last roll
-      rolls.last.pick.nil? &&
       # There are some dominos that can be picked
       !FetchAvailableDominos.new(game).call.empty? &&
       # The player has picked some worm-sided dice
       rolls.any? { |roll| roll.pick? && roll.pick.include?('W') }
+  end
+
+  def any_dice_left?
+    rolls.sum(&:nb_dice_picked) < 8 #TODO: magic number
   end
 end

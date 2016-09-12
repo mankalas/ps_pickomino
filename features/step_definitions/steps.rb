@@ -41,8 +41,7 @@ end
 
 Given(/^I already have picked (\d+) (\w+)s$/) do |nb, value|
   game = Game.find(1)
-  game.current_turn.rolls.create!(outcome: value * nb.to_i + "123", pick: value)
-  RollDice.new(game).call
+  game.current_turn.rolls.create!(outcome: value * nb.to_i, pick: value)
   visit game_path(game)
 end
 

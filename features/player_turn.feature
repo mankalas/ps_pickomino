@@ -35,7 +35,7 @@ Feature: A player's turn
     And I don't see "Your dice score is"
     And I don't see "Roll outcome:"
     And I don't see "I'd like to pick the"
-    And I don't see a "Pick" button
+    And I don't see a "Pick Dice" button
     And I don't see "I want to pick the domino"
     And I don't see a "Pick Domino" button
 
@@ -47,7 +47,7 @@ Feature: A player's turn
     And I don't see "Your dice score is 0."
     And I see "Roll outcome:"
     And I see "I'd like to pick the"
-    And I see a "Pick" button
+    And I see a "Pick Dice" button
     And I don't see "I want to pick the domino"
     And I don't see a "Pick Domino" button
 
@@ -57,27 +57,55 @@ Feature: A player's turn
     And I have made a roll whose outcome is 111
     Then I see "Domino 36 becomes unavailable."
     And I don't see "I'd like to pick the"
-    And I don't see a "Pick" button
+    And I don't see a "Pick Dice" button
     And I don't see "I want to pick the domino"
     And I don't see a "Pick Domino" button
 
-  Scenario Outline: I've rolled, and I choose a value to pick some dice
+  Scenario: I've pick all the dice
+    Given I am in a game
+    And I already have picked 4 4s
+    And I already have picked 4 Ws
+    Then I don't see a "Roll" button
+    And I see "You've already picked"
+    And I see "Your dice score is"
+    And I don't see "Roll outcome:"
+    And I don't see "I'd like to pick the"
+    And I don't see a "Pick Dice" button
+    And I see "I want to pick the domino"
+    And I see a "Pick Domino" button
+
+  Scenario Outline: I've rolled, and I choose a value to pick some dice. My score is too low to pick a domino.
     Given I am in a game
     And I have made a roll whose outcome is <outcome>
     When I select the "value" <value>
-    And I click on the "Pick" button
+    And I click on the "Pick Dice" button
     Then I see "You've already picked"
     And I see <nb> '<value>'s
     And I see "Your dice score is <score>."
     And I see a "Roll" button
     And I don't see "I'd like to pick the"
-    And I don't see a "Pick" button
+    And I don't see a "Pick Dice" button
     And I don't see "I want to pick the domino"
     And I don't see a "Pick Domino" button
     Examples:
+    |  outcome | value | nb | score |
+    | 12345W12 |     W |  1 |     5 |
+    | 12345144 |     4 |  3 |    12 |
+
+  Scenario Outline: I've rolled, and I choose a value to pick some dice. My score is high enough to pick a domino.
+    Given I am in a game
+    And I have made a roll whose outcome is WWWWW123
+    When I select the "value" W
+    And I click on the "Pick Dice" button
+    Then I see "Your dice score is 25."
+    And I see a "Roll" button
+    And I don't see "I'd like to pick the"
+    And I don't see a "Pick Dice" button
+    And I see "I want to pick the domino"
+    And I see a "Pick Domino" button
+    Examples:
     | outcome  | value | nb | score |
-    | 12345W12 | W     |  1 |     5 |
-    | 12345144 | 4     |  3 |    12 |
+    | WWWWW123 | W     |  5 |    25 |
 
   Scenario: I've rolled a high score, but I've picked no worm so I can't pick a domino
     Given I am in a game

@@ -20,7 +20,8 @@ module GamesHelper
   end
 
   def show_roll_outcome
-    render partial: 'roll_outcome' if @current_turn.rolls.present?
+    show_roll = @current_turn.rolls.present? && @current_turn.rolls.last.pick.nil?
+    render partial: 'roll_outcome' if show_roll
   end
 
   def player_dominos(player)

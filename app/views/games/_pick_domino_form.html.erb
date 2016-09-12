@@ -1,7 +1,6 @@
 <%= form_tag(game_pick_domino_path(@game), :method => :post) do %>
     <%= label_tag "I want to pick the Domino" %>
-    <%= select_tag :domino, options_for_select(available_dominos_values),
-        :include_blank => true %>
+    <%= select_tag :domino, options_for_select(available_dominos_values) %>
 
     <%= submit_tag 'Pick Domino'%>
 <% end %>
