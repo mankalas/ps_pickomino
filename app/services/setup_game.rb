@@ -4,9 +4,7 @@ class SetupGame
   end
 
   def call
-    Domino.all.each do |domino|
-      @game.in_game_dominos << InGameDomino.create!(game: @game, domino: domino)
-    end
+    setup_in_game_dominos
 
     if User.count == 0
       user = User.create!(name: "Dummy", color: "#00ffee")

@@ -1,0 +1,10 @@
+<p>
+    Dominos available:
+    <%= @game.dominos.map{ |d| "[#{d.value} | #{d.nb_worms}]" }.join(', ') %>
+</p>
+
+<h2>Turn #<%= @current_turn.index %></h2>
+
+<%= show_picked_dice %>
+<%= show_roll_outcome %>
+<%= show_actions %>

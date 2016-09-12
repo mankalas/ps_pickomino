@@ -12,4 +12,8 @@ class Game < ApplicationRecord
   def dominos
     in_game_dominos.where(player: nil)
   end
+
+  def over?
+    dominos.empty?
+  end
 end

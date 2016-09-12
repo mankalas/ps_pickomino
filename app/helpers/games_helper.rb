@@ -1,4 +1,8 @@
 module GamesHelper
+  def show_game_state
+    render partial: @game.over? ? 'game_over' : 'in_progress'
+  end
+
   def show_actions
     render partial: @current_turn.lost? ? 'lost_turn' : 'actions'
   end
