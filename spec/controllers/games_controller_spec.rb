@@ -2,10 +2,9 @@ require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
   describe "GET #show" do
-    let(:game) { Game.new }
+    let(:game) { Game.create! }
 
     it "renders the 'show' template" do
-      game.save!
       get :show, params: { id: game.id }
       expect(response).to render_template(:show)
     end

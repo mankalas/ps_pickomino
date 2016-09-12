@@ -2,9 +2,20 @@
 
 <p>
     Players in game:
-    <% @game.players.each do |pl| %>
-        <%= pl.name %> (<%= pluralize(pl.worm_score, 'worm')%>)
-    <% end %>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Nb worms</th>
+            <th>Dominos</th>
+        </tr>
+        <% @game.players.each do |pl| %>
+            <tr>
+                <td><%= pl.name %></td>
+                <td><%= pluralize(pl.worm_score, 'worm')%></td>
+                <td><%= player_dominos(pl) %></td>
+            </tr>
+        <% end %>
+    </table>
 </p>
 
 <p>

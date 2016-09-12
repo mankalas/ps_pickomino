@@ -39,12 +39,13 @@ Given(/^I have made a roll whose outcome is ([^"]*)$/) do |outcome|
   visit game_path(game)
 end
 
-Given(/^I have a dice score of (\d+)$/) do |score|
+Given(/^I already have picked (\d+) (\w+)s$/) do |nb, value|
   game = Game.find(1)
-  game.current_turn.rolls.create!(outcome: '5' * (score.to_i / 5), pick: '5')
-  ProgressTurn.new(game, {}).call
+  game.current_turn.rolls.create!(outcome: value * nb.to_i + "123", pick: value)
+  RollDice.new(game).call
   visit game_path(game)
 end
+
 
 When(/^I click on the "([^"]*)" link$/) do |link|
   CreateDominos.new.call if link == "New Game"
@@ -59,8 +60,8 @@ When(/^I fill up "([^"]*)" with "([^"]*)"$/) do |field, value|
   fill_in field, with: value
 end
 
-When(/^I select (\w)$/) do |value|
-  select(value, :from => "value")
+When(/^I select the "([^"]*)" (\w+)$/) do |selector, value|
+  select(value, :from => selector)
 end
 
 When(/^I pick the domino (\d+)$/) do |domino|
@@ -79,7 +80,11 @@ Then(/^I don't see "([^"]*)"$/) do |name|
 end
 
 Then(/^I see a "([^"]*)" button$/) do |name|
-  expect(find_button(name)).not_to be nil
+  expect(page).to have_button(name)
+end
+
+Then(/^I don't see a "([^"]*)" button$/) do |name|
+  expect(page).not_to have_button(name)
 end
 
 Then(/^I see the dominos$/) do

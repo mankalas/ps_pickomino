@@ -17,7 +17,8 @@ RSpec.describe PickDomino, type: :service do
 
     context "when the picked domino is not owned by anybody" do
       before do
-        game.current_turn.rolls.create!(outcome: '555555', pick: '5')
+        game.current_turn.rolls.create!(outcome: 'WWWWWW', pick: 'W')
+        game.current_turn.rolls.create!(outcome: '123')
         game.in_game_dominos << domino
       end
 
@@ -47,7 +48,8 @@ RSpec.describe PickDomino, type: :service do
         # Create a new turn for player2
         game.turns.create!(game: game, player: player2)
         # Roll the dice
-        game.current_turn.rolls.create!(outcome: '555555', pick: '5')
+        game.current_turn.rolls.create!(outcome: 'WWWWWW', pick: 'W')
+        game.current_turn.rolls.create!(outcome: '123')
       end
 
       it "removes the first player's ownership of the domino" do

@@ -14,7 +14,8 @@ Feature: A player's turn
   Once the dice are set aside, the player can choose to pick a domino
   or roll again to obtain a better dice score.
 
-  If the dice score is large enough, the player can decide to pick a
+  If the dice score is large enough AND the player has picked at least
+  one dice on the worm side ('W'), the player can decide to pick a
   domino whose value is less or equal to the dice score. The chosen
   domino must be either on the table AND available, or the last domino
   another player picked up.
@@ -30,33 +31,63 @@ Feature: A player's turn
   Scenario: I begin a fresh new turn
     Given I am in a game
     Then I see a "Roll" button
+    And I don't see "You've already picked"
+    And I don't see "Your dice score is"
     And I don't see "Roll outcome:"
+    And I don't see "I'd like to pick the"
+    And I don't see a "Pick" button
+    And I don't see "I want to pick the domino"
+    And I don't see a "Pick Domino" button
 
   Scenario: I roll the dice for the first time
     Given I am in a game
     When I click on the "Roll" button
-    Then I see "Roll outcome:"
+    Then I don't see a "Roll" button
+    And I don't see "You've already picked"
+    And I don't see "Your dice score is 0."
+    And I see "Roll outcome:"
+    And I see "I'd like to pick the"
+    And I see a "Pick" button
+    And I don't see "I want to pick the domino"
+    And I don't see a "Pick Domino" button
 
-  Scenario Outline: I choose a value to pick some dice
+  Scenario: I've rolled, and I can't choose any value
+    Given I am in a game
+    And I already have picked 5 1s
+    And I have made a roll whose outcome is 111
+    Then I see "Domino 36 becomes unavailable."
+    And I don't see "I'd like to pick the"
+    And I don't see a "Pick" button
+    And I don't see "I want to pick the domino"
+    And I don't see a "Pick Domino" button
+
+  Scenario Outline: I've rolled, and I choose a value to pick some dice
     Given I am in a game
     And I have made a roll whose outcome is <outcome>
-    When I select <value>
+    When I select the "value" <value>
     And I click on the "Pick" button
     Then I see "You've already picked"
     And I see <nb> '<value>'s
-    And I see "Your dice score is <score>"
+    And I see "Your dice score is <score>."
+    And I see a "Roll" button
+    And I don't see "I'd like to pick the"
+    And I don't see a "Pick" button
+    And I don't see "I want to pick the domino"
+    And I don't see a "Pick Domino" button
     Examples:
     | outcome  | value | nb | score |
-    | 12345W12 |     1 |  2 |     2 |
-    | WWWWWWWW |     W |  8 |    40 |
-    | 12345123 |     4 |  1 |     4 |
+    | 12345W12 | W     |  1 |     5 |
+    | 12345144 | 4     |  3 |    12 |
 
-  Scenario Outline: I want to pick a domino which values as much or less than my dice score
+  Scenario: I've rolled a high score, but I've picked no worm so I can't pick a domino
     Given I am in a game
-    And I have a dice score of <dice_score>
-    When I pick the domino <domino>
-    Then I see "(<nb_worms> worms)"
-    Examples:
-    | dice_score | domino | nb_worms |
-    |         30 |     30 |        3 |
-    |         30 |     27 |        2 |
+    And I already have picked 6 5s
+    Then I don't see "I want to pick the domino"
+    And I don't see a "Pick Domino" button
+
+  Scenario: I've rolled a high score and I've picked some worms so I can pick a domino
+    Given I am in a game
+    And I already have picked 6 Ws
+    When I select the "domino" 30
+    And I click on the "Pick Domino" button
+    Then I see "3 worms"

@@ -1,6 +1,3 @@
-<%= form_tag(game_progress_path(@game), :method => :post) do %>
-    <%= label_tag "I'd like to pick the" %>
-    <%= select_tag :value, options_for_select(show_available_dice_values) %>
-
-    <%= submit_tag 'Pick'%>
+<%= form_tag(game_roll_dice_path(@game), :method => :post) do %>
+    <%= submit_tag 'Roll' %>
 <% end %>
