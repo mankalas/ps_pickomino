@@ -1,23 +1,23 @@
 module GamesHelper
-  def show_roll_form
-    if @game.first_roll?
-      render partial: 'first_roll_form'
-    elsif available_values.empty?
-      render partial: 'lost_turn'
-    else
-      render partial: 'roll_form'
-    end
+  def show_actions
+    render partial: @current_turn.lost? ? 'lost_turn' : 'actions'
   end
 
-  def available_values
-    picked_values = @game.current_turn.rolls.collect { |roll| roll.pick }
-    rolled_values = @game.last_roll_outcome.chars.uniq
-    (rolled_values - picked_values).sort
+  def show_roll_form
+    render partial: 'first_roll_form' unless @current_turn.rolls.present?
+  end
+
+  def show_pick_dice_form
+    render partial: 'roll_form' if @current_turn.can_pick_dice?
+  end
+
+  def show_pick_domino_form
+    render partial: 'pick_domino_form' if @current_turn.can_pick_domino?
   end
 
   def picked_dice
     hash = Hash.new
-    @game.current_turn.rolls.collect do |roll|
+    @current_turn.rolls.collect do |roll|
       if roll.pick
         hash[roll.pick] = roll.outcome.chars.count(roll.pick)
       end
@@ -25,37 +25,23 @@ module GamesHelper
     hash
   end
 
+  def first_roll?
+    @current_turn.rolls.present? if @current_turn
+  end
+
   def show_picked_dice
-    render partial: 'picked_dice' unless @game.first_roll?
+    render partial: 'picked_dice' if @current_turn.rolls.present?
   end
 
   def show_roll_outcome
-    render partial: 'roll_outcome' unless @game.first_roll?
+    render partial: 'roll_outcome' if @current_turn.rolls.present?
   end
 
-  def dice_score
-    @game.current_turn.rolls.sum(&:score)
+  def show_available_dice_values
+    @current_turn.available_dice_values
   end
 
-  def smallest_available_domino(dice_score)
-    min_domino = available_dominos(dice_score).min_by { |domino| domino.value }
-    if min_domino
-      min_domino.domino.value
-    else
-      100
-    end
-  end
-
-  def available_dominos(dice_score)
-    game_dominos = @game.in_game_dominos.joins(:domino).where("value <= #{dice_score}")
-    players_dominos = @game.players.each.collect do |player|
-      last_domino = player.last_domino
-      last_domino if last_domino and last_domino.value >= dice_score
-    end.compact
-    game_dominos + players_dominos
-  end
-
-  def show_available_dominos_values(dice_score)
-    available_dominos(dice_score).collect { |domino| domino.value }
+  def show_available_dominos_values
+    FetchAvailableDominos.new(@game).call.collect { |domino| domino.value }
   end
 end

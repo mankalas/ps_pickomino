@@ -2,54 +2,59 @@ require 'rails_helper'
 
 RSpec.describe Turn, type: :model do
   let(:game) { Game.create! }
-  let(:user) { User.create!(name: "qwe", color: "#fabecc") }
-  let(:player) { Player.create!(game: game, user: user) }
-  let(:turn) { Turn.create!(game: game, player: player) }
+  let(:player) { Player.create!(game: game, user: User.create!(name: "q")) }
+  let(:turn) { game.turns.last }
 
-  describe "#last_roll_outcome" do
-    context "when no roll has been made" do
-      it "returns nil if no roll has been made" do
-        expect(turn.last_roll_outcome).to be_nil
-      end
-    end
-
-    context "when a roll has been made" do
-      let(:outcome) { '12312312' }
-
-      it "returns the roll's outcome" do
-        turn.rolls << Roll.create!(turn: turn, outcome: outcome, pick: '1')
-        expect(turn.last_roll_outcome).to eq outcome
-      end
-    end
-
-    context "when sevral rolls have been made" do
-      let(:outcome) { '12312312' }
-
-      it "returns the last roll's outcome" do
-        5.times { |_| turn.rolls << Roll.create!(turn: turn, outcome: ('a'..'z').to_a.shuffle[0,8].join, pick: '1') }
-        turn.rolls << Roll.create!(turn: turn, outcome: outcome, pick: '1')
-        expect(turn.last_roll_outcome).to eq outcome
-      end
-    end
+  before do
+    game.turns.build(player: player)
   end
 
-  describe "#first_roll?" do
-    context "No roll has been made" do
-      it "returns true" do
-        expect(turn.first_roll?).to be_truthy
+  describe "#available_dice_values" do
+    context "when no dice has been picked" do
+      context "and when no roll has been made" do
+        it "returns an empty array" do
+          expect(turn.available_dice_values).to be nil
+        end
+      end
+
+      context "and when a roll has been made" do
+        let(:outcome) { '12345WW' }
+
+        before do
+          turn.rolls.build(outcome: outcome)
+        end
+
+        it "returns all of the outcome's value" do
+          expect(turn.available_dice_values).to match outcome.chars.uniq
+        end
       end
     end
 
-    context "A roll has been made" do
-      it "returns false" do
-        turn.rolls.build
-        turn.save!
-        expect(turn.first_roll?).to be_falsey
+    context "dice have been picked" do
+      let(:outcome) { '123345WW' }
+      let(:first_pick) { '2' }
+      let(:second_pick) { 'W' }
+
+      before do
+        turn.rolls.build(outcome: outcome, pick: first_pick)
+        turn.rolls.build(outcome: outcome, pick: second_pick)
+      end
+
+      context "and when no roll has been made" do
+        it "returns an empty array" do
+          expect(turn.available_dice_values).to match "1345".chars
+        end
+      end
+
+      context "and when a roll has been made" do
+        before do
+          turn.rolls.build(outcome: outcome)
+        end
+
+        it "returns the outcome's values minus the values already taken" do
+          expect(turn.available_dice_values).to match outcome.chars.uniq - [first_pick, second_pick]
+        end
       end
     end
-  end
-
-  describe "#pick_domino!" do
-
   end
 end

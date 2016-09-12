@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:name) { "Chiche" }
-  let(:user) { User.new(name: name) }
+  fixtures :users
+
+  let(:user) { users(:user) }
 
   describe "Validation" do
     describe "name" do
@@ -35,10 +36,8 @@ RSpec.describe User, type: :model do
       end
 
       it "rejects duplicates" do
-        user.save
-        user = User.new(name: name)
-        user.save
-        expect(user).not_to be_valid
+        new_user = User.create(name: user.name)
+        expect(new_user).not_to be_valid
       end
     end
 
@@ -64,7 +63,7 @@ RSpec.describe User, type: :model do
       end
 
       it "sets the color to #f71b6c if nil" do
-        user.save # So the 'before_validation' callback is called
+        user = User.create!(name: "t")
         expect(user.color).to eq "#f71b6c"
       end
     end

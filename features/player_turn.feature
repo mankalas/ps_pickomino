@@ -19,9 +19,13 @@ Feature: A player's turn
   domino must be either on the table AND available, or the last domino
   another player picked up.
 
+  If the roll results in a situation where the player can't pick any
+  dice, ie. all the values of the roll have already been taken, the
+  turn is lost and the domino that has the highest value on the game
+  is discarded.
+
   The turn ends when the player has chosen a domino or when he can't
-  pick up dice anymore, ie. all the values of the roll have already
-  been taken.
+  pick up dice anymore.
 
   Scenario: I begin a fresh new turn
     Given I am in a game
@@ -37,7 +41,7 @@ Feature: A player's turn
     Given I am in a game
     And I have made a roll whose outcome is <outcome>
     When I select <value>
-    And I click on the "Pick & Roll" button
+    And I click on the "Pick" button
     Then I see "You've already picked"
     And I see <nb> '<value>'s
     And I see "Your dice score is <score>"
@@ -51,7 +55,7 @@ Feature: A player's turn
     Given I am in a game
     And I have a dice score of <dice_score>
     When I pick the domino <domino>
-    Then I see "You have <nb_worms> worms"
+    Then I see "(<nb_worms> worms)"
     Examples:
     | dice_score | domino | nb_worms |
     |         30 |     30 |        3 |

@@ -3,23 +3,19 @@
 <p>
     Players in game:
     <% @game.players.each do |pl| %>
-        <%= pl.name %>
+        <%= pl.name %> (<%= pluralize(pl.worm_score, 'worm')%>)
     <% end %>
 </p>
 
 <p>
     Dominos available:
-    <%= @game.in_game_dominos.map{ |d| d.value }.join(', ') %>
+    <%= @game.dominos.map{ |d| "[#{d.value} | #{d.nb_worms}]" }.join(', ') %>
 </p>
 
-<p>
-    You have <%= @game.current_worm_score %> worms.
-</p>
-
-<h2>Turn #<%= @game.current_turn.index %></h2>
+<h2>Turn #<%= @current_turn.index %></h2>
 
 <%= show_picked_dice %>
 <%= show_roll_outcome %>
-<%= show_roll_form %>
+<%= show_actions %>
 
 <%= link_to 'Quit', root_path %>

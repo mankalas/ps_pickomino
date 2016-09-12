@@ -1,0 +1,21 @@
+class PickDomino
+  def initialize(game, value)
+    @game = game
+    @value = value.to_i
+  end
+
+  def call
+    available_dominos = FetchAvailableDominos.new(@game).call
+
+    if !available_dominos.empty?
+      current_turn = @game.current_turn
+      domino = available_dominos.detect { |dom| dom.value == @value }
+
+      # Any turn ends with a domino pick.
+      current_turn.update!(in_game_domino: domino)
+      domino.update!(player: current_turn.player)
+
+      @game.turns.create!(player: @game.players.take)
+    end
+  end
+end

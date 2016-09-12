@@ -4,22 +4,37 @@ class Turn < ApplicationRecord
   has_many :rolls
   has_one :in_game_domino
 
+  scope :most_recent_first, -> { order(:created_at => :desc) }
+
+  def self.most_recent
+    most_recent_first.first
+  end
+
+  def dice_score
+    rolls.sum(&:score)
+  end
+
+  def lost?
+    rolls.present? && !available_dice_values
+  end
+
   def last_roll_outcome
-    last_roll = rolls.last
-    last_roll.outcome unless last_roll.nil?
+    rolls.last.outcome if rolls.present?
   end
 
-  def first_roll?
-    rolls.empty?
+  def available_dice_values
+    if rolls.present?
+      picked_values = rolls.collect { |roll| roll.pick }
+      rolled_values = last_roll_outcome.chars.uniq
+      (rolled_values - picked_values).sort
+    end
   end
 
-  def worm_score
-    player.worm_score
+  def can_pick_dice?
+    rolls.present? && !lost?
   end
 
-  def pick_domino!(domino)
-    self.in_game_domino = domino
-    player.in_game_dominos << domino
-    save!
+  def can_pick_domino?
+    rolls.present? && rolls.last.pick.nil?
   end
 end

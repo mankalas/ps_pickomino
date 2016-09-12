@@ -23,7 +23,7 @@ Given(/^(?:A|a) user named "([^"]*)" exists$/) do |name|
 end
 
 Given(/^A game "([^"]*)" exists$/) do |id|
-  CreateDominosService.new.call
+  CreateDominos.new.call
   game = Game.create!(id: id)
   SetupGame.new(game).call
 end
@@ -42,12 +42,12 @@ end
 Given(/^I have a dice score of (\d+)$/) do |score|
   game = Game.find(1)
   game.current_turn.rolls.create!(outcome: '5' * (score.to_i / 5), pick: '5')
-  ProgressTurn.new(game.current_turn, {}).call
+  ProgressTurn.new(game, {}).call
   visit game_path(game)
 end
 
 When(/^I click on the "([^"]*)" link$/) do |link|
-  CreateDominosService.new.call if link == "New Game"
+  CreateDominos.new.call if link == "New Game"
   click_link link
 end
 
@@ -65,7 +65,7 @@ end
 
 When(/^I pick the domino (\d+)$/) do |domino|
   game = Game.find(1)
-  game.pick_domino!(domino)
+  PickDomino.new(game, domino).call
   visit game_path(game)
 end
 
@@ -83,7 +83,8 @@ Then(/^I see a "([^"]*)" button$/) do |name|
 end
 
 Then(/^I see the dominos$/) do
-  expect(page).to have_content("Dominos available: #{(21..36).to_a.join(', ')}")
+  dominos_s = (21..36).each.collect { |value| "[#{value} | #{CreateDominos.nb_worms(value)}]"}
+  expect(page).to have_content("Dominos available: #{dominos_s.join(', ')}")
 end
 
 Then(/^The "([^"]*)" dropdown has values ([^"]*)$/) do |dropdown, arg2|

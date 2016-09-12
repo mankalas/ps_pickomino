@@ -1,0 +1,12 @@
+high_score:
+  player: player
+
+low_score:
+  player: player
+
+several_rolls:
+  player: player
+
+turn_of_30:
+  game: game
+  player: player2

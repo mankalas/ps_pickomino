@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
+    @current_turn = @game.current_turn
   end
 
   def create
@@ -10,9 +11,9 @@ class GamesController < ApplicationController
   end
 
   # Custom
-  def roll
+  def progress
     @game = Game.find(params[:id])
-    ProgressTurn.new(@game.current_turn, params).call
+    ProgressTurn.new(@game, params).call
     redirect_to @game
   end
 

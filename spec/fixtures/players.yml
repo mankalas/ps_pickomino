@@ -1,0 +1,11 @@
+player:
+  game: game
+  user: user
+
+player1:
+  game: game
+  user: user
+
+player2:
+  game: game
+  user: user

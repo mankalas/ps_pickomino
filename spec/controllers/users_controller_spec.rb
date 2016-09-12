@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   let(:color) { "#fabecc" }
-  let(:name) { "chiche" }
+  let(:name) { "Chiche" }
 
   describe "GET #new" do
     it "renders the 'new' template" do

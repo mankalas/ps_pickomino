@@ -1,0 +1,25 @@
+high_score:
+  outcome: 'WWWWWWW'
+  pick: 'W'
+
+no_dice_picked:
+  outcome: '12345WW'
+
+low_score:
+  outcome: '1234555'
+  pick: '1'
+
+random_1:
+  outcome: '25213W'
+  pick: '3'
+  turns : several_rolls
+
+random_2:
+  outcome: '235342W'
+  pick: '2'
+  turns : several_rolls
+
+score_of_30:
+  outcome: '555555'
+  pick: '5'
+  turns: turn_of_30

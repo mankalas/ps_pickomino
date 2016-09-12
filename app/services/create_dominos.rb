@@ -1,11 +1,9 @@
-class CreateDominosService
+class CreateDominos
   def call
-    (21..36).each { |value| Domino.create(value: value, nb_worms: nb_worms(value)) }
+    (21..36).each { |value| Domino.create(value: value, nb_worms: CreateDominos.nb_worms(value)) }
   end
 
-  private
-
-  def nb_worms(value)
+  def self.nb_worms(value)
     if value.between?(21, 24)
       1
     elsif value.between?(25, 28)
