@@ -12,6 +12,11 @@ class GamesController < ApplicationController
     redirect_to @game
   end
 
+  def destroy
+    @game.destroy
+    redirect_to root_path
+  end
+
   # Custom
   def roll_dice
     RollDice.new(@game).call
