@@ -102,3 +102,11 @@ end
 Then(/^I see (\d+) '(\w)'s$/) do |nb, value|
   expect(page).to have_content("#{nb} '#{value}'s")
 end
+
+Then(/^I see image "([^"]*)"$/) do |name|
+  expect(page).to have_css("img[alt='#{name}']")
+end
+
+Then(/^I don't see image "([^"]*)"$/) do |name|
+  expect(page).not_to have_css("img[alt='#{name}']")
+end

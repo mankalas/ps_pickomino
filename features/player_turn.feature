@@ -56,7 +56,8 @@ Feature: A player's turn
     And I already have picked 5 1s
     And I have made a roll whose outcome is 111
     Then I see "Highest domino discarded."
-    And I don't see "[36 | 4]"
+    And I see image "Domino35"
+    And I don't see image "Domino36"
     And I don't see a "Roll" button
     And I don't see "I'd like to pick the"
     And I don't see a "Pick Dice" button
