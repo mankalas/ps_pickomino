@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users
-  resources :games
+  resources :games, only: [:show, :new, :create, :destroy]
 
   match 'games/:id/roll_dice' => 'games#roll_dice', as: :game_roll_dice, via: :post
   match 'games/:id/pick_dice' => 'games#pick_dice', as: :game_pick_dice, via: :post
