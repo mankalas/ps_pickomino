@@ -6,8 +6,9 @@ class PickDice
   end
 
   def call
-    if @current_turn.rolls.last.pick.nil?
-      @current_turn.rolls.last.update!(:pick => @value)
+    if @current_turn.rolls.present?
+      last_roll = @current_turn.rolls.last
+      last_roll.update!(:pick => @value) if last_roll.pick.nil?
     end
   end
 end
