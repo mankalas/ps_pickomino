@@ -2,3 +2,6 @@
     You can't pick any dice. You've lost your turn. Highest domino
     discarded.
 </p>
+<%= form_tag(game_pass_path(@game), :method => :post) do %>
+    <%= submit_tag 'Pass' %>
+<% end %>

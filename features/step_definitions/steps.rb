@@ -25,7 +25,7 @@ end
 Given(/^A game "([^"]*)" exists$/) do |id|
   CreateDominos.new.call
   game = Game.create!(id: id)
-  SetupGame.new(game).call
+  SetupGame.new(game, [User.create!(name: "Chiche").id]).call
 end
 
 Given(/^I am in a game$/) do
@@ -67,6 +67,10 @@ When(/^I pick the domino (\d+)$/) do |domino|
   game = Game.find(1)
   PickDomino.new(game, domino).call
   visit game_path(game)
+end
+
+When(/^I check "([^"]*)"$/) do |checkbox|
+  find(:css, "#user_ids[value='#{checkbox}']").set(true)
 end
 
 

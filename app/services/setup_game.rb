@@ -1,29 +1,28 @@
 class SetupGame
-  def initialize(game)
+  def initialize(game, user_ids)
     @game = game
+    @user_ids = user_ids
   end
 
   def call
     setup_in_game_dominos
-
-    if User.count == 0
-      user = User.create!(name: "Dummy", color: "#00ffee")
-    else
-      user = User.last
-    end
-
-    @game.players.create(user: user, game: @game)
-    @game.turns.create(player: @game.players.last, index: 1)
-    @game.save!
+    setup_players
+    @game.turns.create!(player: @game.players.last, index: 1)
   end
 
   private
 
   def setup_in_game_dominos
     Domino.all.each do |domino|
-      @game.in_game_dominos << InGameDomino.create!(game: @game, domino: domino)
+      @game.in_game_dominos.create!(game: @game, domino: domino)
     end
     # For testing, to shorter the game
     #@game.in_game_dominos << InGameDomino.create!(game: @game, domino: Domino.first)
+  end
+
+  def setup_players
+    @user_ids.each do |user_id|
+      @game.players.create!(game: @game, user: User.find(user_id))
+    end
   end
 end
