@@ -15,7 +15,7 @@ RSpec.describe GamesController, type: :controller do
       User.create(:name => "Chiche", :color => "#fabecc")
     end
 
-    let(:create_request) { post :create }
+    let(:create_request) { post :create, :params => { :game => { :user_ids => [1] } } }
 
     it "creates a new game" do
       expect{ create_request }.to change{ Game.count }.by(1)

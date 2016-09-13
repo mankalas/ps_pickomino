@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :find
-  skip_before_action :find, only: [:create]
+  skip_before_action :find, only: [:create, :new]
 
   def show
     @current_turn = @game.current_turn
@@ -8,7 +8,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create!
-    SetupGame.new(@game).call
+    SetupGame.new(@game, params[:game][:user_ids]).call
     redirect_to @game
   end
 
@@ -30,6 +30,11 @@ class GamesController < ApplicationController
 
   def pick_domino
     PickDomino.new(@game, pick_domino_params).call
+    redirect_to @game
+  end
+
+  def pass
+    PassTurn.new(@game).call
     redirect_to @game
   end
 

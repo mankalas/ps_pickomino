@@ -1,0 +1,19 @@
+<h1>New game</h1>
+
+Which players?
+
+<%= form_for :game, url: games_path do |f| %>
+    <% User.all.each do |user| %>
+        <%= check_box_tag :user_ids,
+        user.id,
+        false, # No user selected by default
+            :name => 'game[user_ids][]'
+        %>
+        <%= user.name %>
+    <% end %>
+
+    <%= f.submit 'Create game' %>
+<% end %>
+</ul>
+
+<%= link_to 'Back to games', root_path %>
