@@ -39,7 +39,7 @@ Feature: A player's turn
     And I don't see "I want to pick the domino"
     And I don't see a "Pick Domino" button
 
-  Scenario: I roll the dice for the first time
+  Scenario: I roll the dice
     Given I am in a game
     When I click on the "Roll" button
     Then I don't see a "Roll" button
@@ -55,7 +55,9 @@ Feature: A player's turn
     Given I am in a game
     And I already have picked 5 1s
     And I have made a roll whose outcome is 111
-    Then I see "Domino 36 becomes unavailable."
+    Then I see "Highest domino discarded."
+    And I don't see "[36 | 4]"
+    And I don't see a "Roll" button
     And I don't see "I'd like to pick the"
     And I don't see a "Pick Dice" button
     And I don't see "I want to pick the domino"

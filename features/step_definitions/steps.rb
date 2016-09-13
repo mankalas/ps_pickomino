@@ -35,7 +35,7 @@ end
 
 Given(/^I have made a roll whose outcome is ([^"]*)$/) do |outcome|
   game = Game.find(1)
-  game.current_turn.rolls.create!(outcome: outcome)
+  RollDice.new(game, GenerateFixedOutcome.new(outcome)).call
   visit game_path(game)
 end
 

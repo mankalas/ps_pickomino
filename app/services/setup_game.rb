@@ -16,4 +16,14 @@ class SetupGame
     @game.turns.create(player: @game.players.last, index: 1)
     @game.save!
   end
+
+  private
+
+  def setup_in_game_dominos
+    Domino.all.each do |domino|
+      @game.in_game_dominos << InGameDomino.create!(game: @game, domino: domino)
+    end
+    # For testing, to shorter the game
+    #@game.in_game_dominos << InGameDomino.create!(game: @game, domino: Domino.first)
+  end
 end
