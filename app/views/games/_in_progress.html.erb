@@ -1,6 +1,8 @@
 <p>
     Dominos available:
-    <%= @game.dominos.map{ |d| "[#{d.value} | #{d.nb_worms}]" }.join(', ') %>
+    <% @game.dominos.each do |d| %>
+        <%= image_tag "domino#{d.value}" %>
+    <% end %>
 </p>
 
 <h2 style="color: <%=@current_turn.player.color%>">Turn #<%= @current_turn.index %> (<%= @current_turn.player.name %>)</h2>
