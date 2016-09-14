@@ -7,6 +7,8 @@
 
 <h2 style="color: <%=@current_turn.player.color%>">Turn #<%= @current_turn.index %> (<%= @current_turn.player.name %>)</h2>
 
+<%= render partial: 'error' %>
+
 <%= show_picked_dice %>
 <%= show_roll_outcome %>
 <%= show_actions %>

@@ -1,0 +1,10 @@
+<p>
+    <% if flash.notice %>
+        <ul>
+            <% flash.notice.each do |msg| %>
+                <li><%= content_tag :div, msg, class: "flashnotice" %></li>
+            <% end %>
+        </ul>
+    <% end %>
+    <% flash.clear %>
+</p>

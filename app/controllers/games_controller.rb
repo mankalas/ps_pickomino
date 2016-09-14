@@ -31,8 +31,13 @@ class GamesController < ApplicationController
   end
 
   def pick_dice
-    PickDice.new(@game, pick_dice_params).call
-    redirect_to @game
+    pick_dice_service = PickDice.new(@game, pick_dice_params)
+    pick_dice_service.call
+    if pick_dice_service.notice
+      redirect_to @game, notice: [pick_dice_service.notice]
+    else
+      redirect_to @game
+    end
   end
 
   def pick_domino

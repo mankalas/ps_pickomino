@@ -85,15 +85,16 @@ Feature: A player's turn
     Then I see "You've already picked"
     And I see <nb> '<value>'s
     And I see "Your dice score is <score>."
-    And I see a "Roll" button
-    And I don't see "I'd like to pick the"
-    And I don't see a "Pick Dice" button
+    And I don't see a "Roll" button
+    And I see "a roll has automatically been made."
+    And I see "I'd like to pick the"
+    And I see a "Pick Dice" button
     And I don't see "I want to pick the domino"
     And I don't see a "Pick Domino" button
     Examples:
-    |  outcome | value | nb | score |
-    | 12345W12 |     W |  1 |     5 |
-    | 12345144 |     4 |  3 |    12 |
+    | outcome  | value | nb | score |
+    | 12345W12 | W     |  1 |     5 |
+    | 12345144 | 4     |  3 |    12 |
 
   Scenario Outline: I've rolled, and I choose a value to pick some dice. My score is high enough to pick a domino.
     Given I am in a game
