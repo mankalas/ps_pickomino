@@ -6,10 +6,17 @@ class GamesController < ApplicationController
     @current_turn = @game.current_turn
   end
 
+  def new
+    @game = Game.new
+  end
+
   def create
-    @game = Game.create!
-    SetupGame.new(@game, params[:game][:user_ids]).call
-    redirect_to @game
+    @game = CreateGame.new(params[:game][:user_ids]).call
+    if @game.valid?
+      redirect_to @game
+    else
+      redirect_to new_game_path, notice: @game.errors
+    end
   end
 
   def destroy
@@ -42,6 +49,10 @@ class GamesController < ApplicationController
 
   def find
     @game = Game.find(params[:id])
+  end
+
+  def game_params
+    params.require(:game).permit(user_ids: [])
   end
 
   def pick_dice_params

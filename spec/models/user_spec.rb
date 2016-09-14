@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   fixtures :users
 
-  let(:user) { users(:user) }
+  let(:user) { users(:bob) }
 
   describe "Validation" do
     describe "name" do
@@ -63,8 +63,7 @@ RSpec.describe User, type: :model do
       end
 
       it "sets the color to #f71b6c if nil" do
-        user = User.create!(name: "t")
-        expect(user.color).to eq "#f71b6c"
+        expect(User.create!(name: "t").color).to eq "#f71b6c"
       end
     end
   end

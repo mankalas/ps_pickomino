@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 def add_domino_to_player(nb_worms, game)
-  player.in_game_dominos << InGameDomino.create!(domino: Domino.create!(value: 0, nb_worms: nb_worms), game: game)
+  player.in_game_dominos.create!(domino: Domino.create!(:value => 0, :nb_worms => nb_worms), :game => game)
 end
 
 def create_turn_with_domino(game, player, value, nb_worms)
-  domino = Domino.create!(value: value, nb_worms: nb_worms)
-  in_game_domino = InGameDomino.create!(domino: domino, game: game)
-  game.turns.create!(player: player, game: game, in_game_domino: in_game_domino)
-  game.save!
-  in_game_domino
+  domino = Domino.create!(:value => value, :nb_worms => nb_worms)
+  in_game_domino = InGameDomino.create!(:domino => domino, :game => game)
+  game.turns.create!(:player => player, :game => game, :in_game_domino => in_game_domino)
 end
 
 RSpec.describe Player, type: :model do
-  let(:game) { Game.create! }
-  let(:user) { User.create!(name: "qwe", color: "#fabecc") }
-  let(:player) { Player.create!(game: game, user: user) }
+  fixtures :users
+
+  let(:user) { users(:bob) }
+  let(:game) { CreateGame.new([user.id]).call }
+  let(:player) { game.players.take }
 
   describe "#worm_score" do
     context "when the player has no domino" do
@@ -51,8 +51,8 @@ RSpec.describe Player, type: :model do
 
     context "when the players has one domino" do
       it "returns the one domino" do
-        in_game_domino = create_turn_with_domino(game, player, 1, 1)
-        expect(player.last_domino).to eq in_game_domino
+        create_turn_with_domino(game, player, 1, 1)
+        expect(player.last_domino.value).to eq 1
       end
     end
 

@@ -2,18 +2,8 @@
 
 Which players?
 
-<%= form_for :game, url: games_path do |f| %>
-    <% User.all.each do |user| %>
-        <%= check_box_tag :user_ids,
-        user.id,
-        false, # No user selected by default
-            :name => 'game[user_ids][]'
-        %>
-        <%= user.name %>
-    <% end %>
+<%= render partial: 'error' %>
 
-    <%= f.submit 'Create game' %>
-<% end %>
-</ul>
+<%= render partial: 'form' %>
 
 <%= link_to 'Back to games', root_path %>

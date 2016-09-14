@@ -1,21 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe GamesController, type: :controller do
-  let(:game) { Game.create! }
+  fixtures :users
+
+  let(:user) { users(:bob) }
+  let(:game) { CreateGame.new([user.id]).call }
 
   describe "GET #show" do
     it "renders the 'show' template" do
-      get :show, params: { id: game.id }
+      get :show, :params => { :id => game.id }
       expect(response).to render_template(:show)
     end
   end
 
   describe "POST #create" do
-    before do
-      User.create(:name => "Chiche", :color => "#fabecc")
-    end
-
-    let(:create_request) { post :create, :params => { :game => { :user_ids => [1] } } }
+    let(:create_request) { post :create, :params => { :game => { :user_ids => [user.id] } } }
 
     it "creates a new game" do
       expect{ create_request }.to change{ Game.count }.by(1)
@@ -38,11 +37,6 @@ RSpec.describe GamesController, type: :controller do
 
   shared_examples "service call" do
     let(:request) { post action, :params => params }
-    let(:player) { Player.create!(game: game, user: User.create!(name: "a")) }
-
-    before do
-      game.turns.create!(player: player)
-    end
 
     it "calls the RollDice service" do
       mock = double(service)

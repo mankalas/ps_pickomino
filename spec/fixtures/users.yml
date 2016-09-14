@@ -1,3 +1,7 @@
-user:
-  name: "Chiche"
+bob:
+  name: "Bob"
   color: "#fabecc"
+
+alice:
+  name: "Alice"
+  color: "#11eedd"

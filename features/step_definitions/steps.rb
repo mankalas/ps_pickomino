@@ -6,6 +6,10 @@ Given(/^I am on the new user page$/) do
   visit new_user_path
 end
 
+Given(/^I am on the new game page$/) do
+  visit new_game_path
+end
+
 Given(/^I am on the user "([^"]*)" edit page$/) do |name|
   visit edit_user_path(User.where(name: name).take)
 end
@@ -24,8 +28,7 @@ end
 
 Given(/^A game "([^"]*)" exists$/) do |id|
   CreateDominos.new.call
-  game = Game.create!(id: id)
-  SetupGame.new(game, [User.create!(name: "Chiche").id]).call
+  CreateGame.new([User.create!(name: "Chiche").id]).call
 end
 
 Given(/^I am in a game$/) do
@@ -70,7 +73,7 @@ When(/^I pick the domino (\d+)$/) do |domino|
 end
 
 When(/^I check "([^"]*)"$/) do |checkbox|
-  find(:css, "#user_ids[value='#{checkbox}']").set(true)
+  check(checkbox)
 end
 
 
