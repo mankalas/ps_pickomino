@@ -15,7 +15,7 @@ class PickDomino
       current_turn.update!(in_game_domino: domino)
       domino.update!(player: current_turn.player)
 
-      @game.turns.create!(player: @game.players.take)
+      PassTurn.new(@game).call
     end
   end
 end
