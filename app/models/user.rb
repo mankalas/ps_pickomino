@@ -5,11 +5,12 @@ class User < ApplicationRecord
 
   # Validation
   validates :name,
-            presence: true,
-            uniqueness: true
+            :presence => { :message => "The name can't be blank" },
+            :uniqueness => true
   validates :color,
-            presence: true,
-            format: { with: /\A\#\h{6}\z/, message: "color must be \#xxxxxx"}
+            :presence => true,
+            :format => { :with => /\A\#\h{6}\z/,
+                         :message => "Color must be \#xxxxxx" }
 
   # Callback
   before_validation :init_color, on: :create
