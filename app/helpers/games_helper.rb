@@ -29,7 +29,9 @@ module GamesHelper
   end
 
   def player_dominos(player)
-    player.in_game_dominos.collect { |domino| "[#{domino.value} | #{domino.nb_worms}]" }.join(', ')
+    player.in_game_dominos.order(:updated_at => :desc).collect do |domino|
+      domino.value
+    end
   end
 
   def available_dice_values
