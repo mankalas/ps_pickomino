@@ -1,0 +1,11 @@
+<% @game.players.each do |pl| %>
+    <tr>
+        <td><%= pl.name %></td>
+        <td><%= pluralize(pl.worm_score, 'worm')%></td>
+        <td>
+            <% player_dominos(pl).each do |domino_value| %>
+                <%= image_tag "domino#{domino_value}" %>
+            <% end %>
+        </td>
+    </tr>
+<% end %>

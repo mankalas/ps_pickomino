@@ -8,13 +8,7 @@
             <th>Nb worms</th>
             <th>Dominos</th>
         </tr>
-        <% @game.players.each do |pl| %>
-            <tr>
-                <td><%= pl.name %></td>
-                <td><%= pluralize(pl.worm_score, 'worm')%></td>
-                <td><%= player_dominos(pl) %></td>
-            </tr>
-        <% end %>
+     <%= render partial: 'players' %>
     </table>
 </p>
 
